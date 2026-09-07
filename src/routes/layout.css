@@ -70,16 +70,26 @@
 }
 
 /* Hero's rotating-role text: one shared keyframe, each <span> phase-shifted into its own
-   slot via animation-delay = introDelaySeconds + index * slotSeconds (set inline in
+   slot via animation-delay = introDelaySeconds + index * roleSpacingSeconds (computed in
    Hero.svelte), held hidden until its turn by animation-fill-mode: backwards.
    introDelaySeconds pushes the whole cycle past the parent .animate-in block's 1s entrance —
    without it, role 0's own fade-in ran at the same time as the wrapper's fade-up and the two
    opacity animations stacked, so the first role visibly faded in twice. Opacity-only on
    purpose too: adding translateY on top of the wrapper's own translateY compounded into a
    double-motion (the role text kept settling after the rest of the block had stopped,
-   reading as a bounce). The 8%/17%/25% marks assume exactly 4 roles (each gets an even 25%
-   slot of the cycle) — matches the current roles list in portfolio.ts; re-space them if
-   that list's length changes. */
+   reading as a bounce).
+
+   roleSpacingSeconds is roleSlotSeconds (4s) minus crossfadeSeconds (0.5s), so consecutive
+   roles' delays are 0.5s closer together than their 4s slot — that 0.5s is where role i's
+   fade-out and role i+1's fade-in happen in the SAME window instead of back-to-back. Back-
+   to-back (both hitting opacity 0 at the same instant, then the next ramping up from there)
+   read as the whole rotator going blank and its entrance fade replaying every ~4s. The
+   3.57%/25%/32.14% marks are that shared window as a fraction of the 14s cycle
+   (4 roles * 3.5s spacing): fade in over the first 0.5s (3.57% = 0.5/14), hold through 25%
+   (3.5/14, the nominal end of this role's slot), fade out over the next 0.5s to 32.14%
+   (4.5/14) — which is exactly when the next role's own fade-in begins. Assumes exactly 4
+   roles; re-derive the marks (crossfadeSeconds / (roles.length * roleSpacingSeconds)) if
+   that list's length or timing changes. */
 .role-cycle {
 	animation-name: role-cycle;
 	animation-timing-function: ease-in-out;
@@ -91,13 +101,13 @@
 	100% {
 		opacity: 0;
 	}
-	8% {
-		opacity: 1;
-	}
-	17% {
+	3.57% {
 		opacity: 1;
 	}
 	25% {
+		opacity: 1;
+	}
+	32.14% {
 		opacity: 0;
 	}
 }
