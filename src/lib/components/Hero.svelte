@@ -3,6 +3,10 @@
 	import Icon from './Icon.svelte';
 
 	const roleSlotSeconds = 4;
+	// matches --animate-in's 1s duration on the wrapper below — starting the
+	// role-cycle's own fade at the same time as the wrapper's entrance fade
+	// stacked the two opacity animations, reading as the role text fading in twice.
+	const introDelaySeconds = 1;
 </script>
 
 <section
@@ -64,7 +68,7 @@
 			{#each profile.roles as role, i (role)}
 				<span
 					style="animation-duration: {profile.roles.length *
-						roleSlotSeconds}s; animation-delay: {i * roleSlotSeconds}s"
+						roleSlotSeconds}s; animation-delay: {introDelaySeconds + i * roleSlotSeconds}s"
 					class="role-cycle absolute inset-x-0 top-0 whitespace-nowrap"
 				>
 					{role}
