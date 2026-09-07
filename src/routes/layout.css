@@ -24,92 +24,6 @@
 
 	--color-accent-400: #ff7ac6;
 	--color-accent-500: #ff4fb0;
-
-	--animate-blob: blob 18s ease-in-out infinite;
-	--animate-float: float 6s ease-in-out infinite;
-	--animate-float-slow: float 9s ease-in-out infinite;
-	--animate-spin-slow: spin 14s linear infinite;
-	--animate-in: fade-up 1s ease both;
-}
-
-@keyframes blob {
-	0%,
-	100% {
-		transform: translate(0, 0) scale(1);
-	}
-	25% {
-		transform: translate(4%, -6%) scale(1.08);
-	}
-	50% {
-		transform: translate(-3%, 4%) scale(0.94);
-	}
-	75% {
-		transform: translate(-6%, -3%) scale(1.04);
-	}
-}
-
-@keyframes float {
-	0%,
-	100% {
-		transform: translateY(0) rotate(0deg);
-	}
-	50% {
-		transform: translateY(-14px) rotate(3deg);
-	}
-}
-
-@keyframes fade-up {
-	from {
-		opacity: 0;
-		transform: translateY(12px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-/* Hero's rotating-role text: one shared keyframe, each <span> phase-shifted into its own
-   slot via animation-delay = introDelaySeconds + index * roleSpacingSeconds (computed in
-   Hero.svelte), held hidden until its turn by animation-fill-mode: backwards.
-   introDelaySeconds pushes the whole cycle past the parent .animate-in block's 1s entrance —
-   without it, role 0's own fade-in ran at the same time as the wrapper's fade-up and the two
-   opacity animations stacked, so the first role visibly faded in twice. Opacity-only on
-   purpose too: adding translateY on top of the wrapper's own translateY compounded into a
-   double-motion (the role text kept settling after the rest of the block had stopped,
-   reading as a bounce).
-
-   roleSpacingSeconds is roleSlotSeconds (4s) minus crossfadeSeconds (0.5s), so consecutive
-   roles' delays are 0.5s closer together than their 4s slot — that 0.5s is where role i's
-   fade-out and role i+1's fade-in happen in the SAME window instead of back-to-back. Back-
-   to-back (both hitting opacity 0 at the same instant, then the next ramping up from there)
-   read as the whole rotator going blank and its entrance fade replaying every ~4s. The
-   3.57%/25%/32.14% marks are that shared window as a fraction of the 14s cycle
-   (4 roles * 3.5s spacing): fade in over the first 0.5s (3.57% = 0.5/14), hold through 25%
-   (3.5/14, the nominal end of this role's slot), fade out over the next 0.5s to 32.14%
-   (4.5/14) — which is exactly when the next role's own fade-in begins. Assumes exactly 4
-   roles; re-derive the marks (crossfadeSeconds / (roles.length * roleSpacingSeconds)) if
-   that list's length or timing changes. */
-.role-cycle {
-	animation-name: role-cycle;
-	animation-timing-function: ease-in-out;
-	animation-iteration-count: infinite;
-	animation-fill-mode: backwards;
-}
-@keyframes role-cycle {
-	0%,
-	100% {
-		opacity: 0;
-	}
-	3.57% {
-		opacity: 1;
-	}
-	25% {
-		opacity: 1;
-	}
-	32.14% {
-		opacity: 0;
-	}
 }
 
 html {
@@ -199,11 +113,5 @@ html.dark ::-webkit-scrollbar-thumb {
 	* {
 		animation-duration: 0.001ms !important;
 		animation-iteration-count: 1 !important;
-	}
-	/* the role-cycle spans revert to their default (visible) state once their
-	   near-instant animation ends, which would otherwise stack all roles on
-	   top of each other — pin it to just the first */
-	.role-cycle:not(:first-of-type) {
-		display: none;
 	}
 }
