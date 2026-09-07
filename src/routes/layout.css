@@ -1,197 +1,256 @@
-@import 'tailwindcss';
-@import '@fontsource-variable/space-grotesk';
-@import '@fontsource-variable/inter';
+@import "tailwindcss";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/inter";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-	--font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
-	--font-display: 'Space Grotesk Variable', ui-sans-serif, system-ui, sans-serif;
+   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+   --font-display:
+      "Space Grotesk Variable", ui-sans-serif, system-ui, sans-serif;
 
-	--color-ink: #0a0a0f;
-	--color-paper: #fafafa;
+   --color-ink: #0a0a0f;
+   --color-paper: #fafafa;
 
-	--color-brand-50: #f2f1ff;
-	--color-brand-100: #e6e4ff;
-	--color-brand-200: #cfccff;
-	--color-brand-300: #aca5ff;
-	--color-brand-400: #8b7bff;
-	--color-brand-500: #7c5cff;
-	--color-brand-600: #6c3ef5;
-	--color-brand-700: #5a2fd1;
-	--color-brand-800: #4a29a8;
-	--color-brand-900: #3d2585;
+   --color-brand-50: #f2f1ff;
+   --color-brand-100: #e6e4ff;
+   --color-brand-200: #cfccff;
+   --color-brand-300: #aca5ff;
+   --color-brand-400: #8b7bff;
+   --color-brand-500: #7c5cff;
+   --color-brand-600: #6c3ef5;
+   --color-brand-700: #5a2fd1;
+   --color-brand-800: #4a29a8;
+   --color-brand-900: #3d2585;
 
-	--color-accent-400: #ff7ac6;
-	--color-accent-500: #ff4fb0;
+   --color-accent-400: #ff7ac6;
+   --color-accent-500: #ff4fb0;
 
-	--animate-blob: blob 18s ease-in-out infinite;
-	--animate-float: float 6s ease-in-out infinite;
-	--animate-float-slow: float 9s ease-in-out infinite;
-	--animate-spin-slow: spin 14s linear infinite;
-	--animate-in: fade-up 1s ease both;
+   --animate-blob: blob 18s ease-in-out infinite;
+   --animate-float: float 6s ease-in-out infinite;
+   --animate-float-slow: float 9s ease-in-out infinite;
+   --animate-spin-slow: spin 14s linear infinite;
+   --animate-in: fade-up 1s ease both;
 }
 
+/* =========================================================
+   KEYFRAMES
+   ========================================================= */
+
 @keyframes blob {
-	0%,
-	100% {
-		transform: translate(0, 0) scale(1);
-	}
-	25% {
-		transform: translate(4%, -6%) scale(1.08);
-	}
-	50% {
-		transform: translate(-3%, 4%) scale(0.94);
-	}
-	75% {
-		transform: translate(-6%, -3%) scale(1.04);
-	}
+   0%,
+   100% {
+      transform: translate(0, 0) scale(1);
+   }
+
+   25% {
+      transform: translate(4%, -6%) scale(1.08);
+   }
+
+   50% {
+      transform: translate(-3%, 4%) scale(0.94);
+   }
+
+   75% {
+      transform: translate(-6%, -3%) scale(1.04);
+   }
 }
 
 @keyframes float {
-	0%,
-	100% {
-		transform: translateY(0) rotate(0deg);
-	}
-	50% {
-		transform: translateY(-14px) rotate(3deg);
-	}
+   0%,
+   100% {
+      transform: translateY(0) rotate(0deg);
+   }
+
+   50% {
+      transform: translateY(-14px) rotate(3deg);
+   }
 }
 
 @keyframes fade-up {
-	from {
-		opacity: 0;
-		transform: translateY(12px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+   from {
+      opacity: 0;
+      transform: translateY(12px);
+   }
+
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
 }
 
-/* Hero's rotating-role text: one shared keyframe, each <span> phase-shifted into its own
-   slot via animation-delay = index * slotSeconds (set inline in Hero.svelte), held hidden
-   until its turn by animation-fill-mode: backwards. Opacity-only on purpose — the parent
-   .animate-in block already slides the whole hero in on load, so the first role's own
-   entrance overlaps that window; adding its own translateY on top compounded into a visible
-   double-motion (the role text kept settling after the rest of the block had stopped,
-   reading as a bounce). The 8%/17%/25% marks assume exactly 4 roles (each gets an even 25%
-   slot of the cycle) — matches the current roles list in portfolio.ts; re-space them if
-   that list's length changes. */
+/*
+ * Each role receives the same animation but with a negative delay.
+ *
+ * This means every role is already positioned at its correct phase
+ * when the page loads, instead of waiting for positive delays.
+ *
+ * The animation is designed around one full role slot:
+ *
+ * 0%  - hidden
+ * 8%  - fade in starts
+ * 17% - fully visible
+ * 25% - fade out finishes
+ *
+ * The remaining 75% of the cycle is spent hidden.
+ */
 .role-cycle {
-	animation-name: role-cycle;
-	animation-timing-function: ease-in-out;
-	animation-iteration-count: infinite;
-	animation-fill-mode: backwards;
+   animation-name: role-cycle;
+   animation-timing-function: ease-in-out;
+   animation-iteration-count: infinite;
+   animation-fill-mode: both;
 }
+
 @keyframes role-cycle {
-	0%,
-	100% {
-		opacity: 0;
-	}
-	8% {
-		opacity: 1;
-	}
-	17% {
-		opacity: 1;
-	}
-	25% {
-		opacity: 0;
-	}
+   0%,
+   8% {
+      opacity: 0;
+   }
+
+   12% {
+      opacity: 1;
+   }
+
+   20% {
+      opacity: 1;
+   }
+
+   25%,
+   100% {
+      opacity: 0;
+   }
 }
+
+/* =========================================================
+   GLOBAL
+   ========================================================= */
 
 html {
-	scroll-behavior: smooth;
-	color-scheme: light;
-}
-
-/* the browser's default focus outline uses currentColor, which is invisible on
-   light-text-on-dark-background buttons (e.g. the hero CTA) against this
-   near-white page background — force a consistent, always-visible ring instead */
-:focus-visible {
-	outline: 2px solid var(--color-brand-500);
-	outline-offset: 2px;
+   scroll-behavior: smooth;
+   color-scheme: light;
 }
 
 html.dark {
-	color-scheme: dark;
+   color-scheme: dark;
 }
 
 body {
-	font-family: var(--font-sans);
-	background: var(--color-paper);
-	color: var(--color-ink);
-	transition:
-		background-color 0.4s ease,
-		color 0.4s ease;
+   font-family: var(--font-sans);
+   background: var(--color-paper);
+   color: var(--color-ink);
+
+   transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
 }
 
 html.dark body {
-	background: var(--color-ink);
-	color: var(--color-paper);
+   background: var(--color-ink);
+   color: var(--color-paper);
 }
 
 ::selection {
-	background: var(--color-brand-400);
-	color: white;
+   background: var(--color-brand-400);
+   color: white;
 }
 
-/* scrollbar */
+/* =========================================================
+   FOCUS
+   ========================================================= */
+
+:focus-visible {
+   outline: 2px solid var(--color-brand-500);
+   outline-offset: 2px;
+}
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
 ::-webkit-scrollbar {
-	width: 10px;
-}
-::-webkit-scrollbar-track {
-	background: transparent;
-}
-::-webkit-scrollbar-thumb {
-	background: var(--color-brand-300);
-	border-radius: 999px;
-}
-html.dark ::-webkit-scrollbar-thumb {
-	background: var(--color-brand-700);
+   width: 10px;
 }
 
-/* scroll-reveal base state, flipped by the `reveal` action. `transition` is an
-   unlayered rule, so it always wins over Tailwind's (layered) utility classes
-   on the same element — which means the property list declared here is the
-   *only* one that transitions, for the lifetime of the element, not just
-   during the entrance. It must list every property any reveal-wrapped element
-   transitions on hover (translate/scale/colors/shadow), or those changes snap
-   instantly instead of animating once revealed. */
+::-webkit-scrollbar-track {
+   background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+   background: var(--color-brand-300);
+   border-radius: 999px;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+   background: var(--color-brand-700);
+}
+
+/* =========================================================
+   SCROLL REVEAL
+   ========================================================= */
+
+/*
+ * Use CSS individual transform properties instead of mixing
+ * transform + translate/scale.
+ *
+ * This lets Tailwind hover utilities such as:
+ *
+ *   hover:scale-105
+ *   hover:-translate-y-1
+ *
+ * coexist cleanly with the reveal animation.
+ */
+
 [data-reveal] {
-	opacity: 0;
-	transform: translateY(28px);
-	transition:
-		opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-		transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-		translate 0.25s ease-out,
-		scale 0.25s ease-out,
-		background-color 0.25s ease-out,
-		border-color 0.25s ease-out,
-		box-shadow 0.25s ease-out;
+   opacity: 0;
+   translate: 0 28px;
+
+   transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      translate 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      scale 0.25s ease-out,
+      background-color 0.25s ease-out,
+      border-color 0.25s ease-out,
+      box-shadow 0.25s ease-out;
 }
+
 [data-reveal].in-view {
-	opacity: 1;
-	transform: translateY(0);
+   opacity: 1;
+   translate: 0 0;
 }
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {
-	html {
-		scroll-behavior: auto;
-	}
-	[data-reveal] {
-		opacity: 1 !important;
-		transform: none !important;
-		transition: none !important;
-	}
-	* {
-		animation-duration: 0.001ms !important;
-		animation-iteration-count: 1 !important;
-	}
-	/* the role-cycle spans revert to their default (visible) state once their
-	   near-instant animation ends, which would otherwise stack all roles on
-	   top of each other — pin it to just the first */
-	.role-cycle:not(:first-of-type) {
-		display: none;
-	}
+   html {
+      scroll-behavior: auto;
+   }
+
+   [data-reveal] {
+      opacity: 1 !important;
+      translate: none !important;
+      transition: none !important;
+   }
+
+   *,
+   *::before,
+   *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+   }
+
+   /*
+	 * With reduced motion, don't let every role remain stacked.
+	 * Keep only the first role visible.
+	 */
+   .role-cycle:not(:first-of-type) {
+      display: none;
+   }
+
+   .role-cycle:first-of-type {
+      opacity: 1 !important;
+      animation: none !important;
+   }
 }
