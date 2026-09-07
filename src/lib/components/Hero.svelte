@@ -1,8 +1,6 @@
 <script lang="ts">
    import { profile, socials } from "$lib/data/portfolio";
    import Icon from "./Icon.svelte";
-
-   const roleSlotSeconds = 4;
 </script>
 
 <section
@@ -13,36 +11,33 @@
       class="pointer-events-none absolute inset-0 -z-10 overflow-hidden [mask-image:linear-gradient(to_bottom,black,black_65%,transparent)]"
    >
       <div
-         class="absolute -top-24 -left-24 size-96 animate-blob rounded-full bg-brand-400/30 blur-3xl dark:bg-brand-600/25"
+         class="absolute -top-24 -left-24 size-96 rounded-full bg-brand-400/30 blur-3xl dark:bg-brand-600/25"
       ></div>
       <div
-         class="absolute top-1/3 -right-24 size-[28rem] animate-blob rounded-full bg-accent-400/20 blur-3xl [animation-delay:-6s] dark:bg-accent-500/15"
+         class="absolute top-1/3 -right-24 size-[28rem] rounded-full bg-accent-400/20 blur-3xl dark:bg-accent-500/15"
       ></div>
       <div
-         class="absolute bottom-0 left-1/3 size-80 animate-blob rounded-full bg-brand-300/20 blur-3xl [animation-delay:-11s] dark:bg-brand-800/20"
+         class="absolute bottom-0 left-1/3 size-80 rounded-full bg-brand-300/20 blur-3xl dark:bg-brand-800/20"
       ></div>
    </div>
 
    <!-- floating decorative shapes -->
    <div
-      class="pointer-events-none absolute top-28 right-[8%] hidden size-14 animate-float rounded-2xl border border-brand-400/40 backdrop-blur-sm md:block"
+      class="pointer-events-none absolute top-28 right-[8%] hidden size-14 rounded-2xl border border-brand-400/40 backdrop-blur-sm md:block"
    ></div>
    <div
-      class="pointer-events-none absolute bottom-24 left-[6%] hidden size-10 animate-float-slow rounded-full bg-accent-400/50 md:block"
+      class="pointer-events-none absolute bottom-24 left-[6%] hidden size-10 rounded-full bg-accent-400/50 md:block"
    ></div>
    <Icon
       name="sparkle"
-      class="pointer-events-none absolute top-1/2 right-[18%] hidden size-6 animate-spin-slow text-brand-400/70 lg:block"
+      class="pointer-events-none absolute top-1/2 right-[18%] hidden size-6 text-brand-400/70 lg:block"
    />
 
-   <div class="animate-in mx-auto w-full max-w-6xl px-6">
+   <div class="mx-auto w-full max-w-6xl px-6">
       <p
          class="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-50 px-4 py-1.5 text-xs font-medium text-brand-700 dark:border-brand-400/20 dark:bg-white/5 dark:text-brand-300"
       >
          <span class="relative flex size-2">
-            <span
-               class="absolute inline-flex size-full animate-ping rounded-full bg-brand-400 opacity-75"
-            ></span>
             <span class="relative inline-flex size-2 rounded-full bg-brand-500"
             ></span>
          </span>
@@ -61,17 +56,7 @@
       <div
          class="relative mt-4 h-8 font-display text-2xl font-medium text-ink/70 sm:h-9 sm:text-3xl dark:text-paper/70"
       >
-         {#each profile.roles as role, i (role)}
-            <span
-               class="role-cycle absolute inset-x-0 top-0 whitespace-nowrap"
-               style="
-			animation-duration: {profile.roles.length * roleSlotSeconds}s;
-			animation-delay: {-i * roleSlotSeconds}s;
-		"
-            >
-               {role}
-            </span>
-         {/each}
+         {profile.roles[0]}
       </div>
 
       <p class="mt-6 max-w-xl text-lg text-ink/60 dark:text-paper/60">
@@ -114,7 +99,7 @@
    <a
       href="#about"
       aria-label="Scroll to about section"
-      class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 animate-float text-ink/50 sm:block dark:text-paper/50"
+      class="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-ink/50 sm:block dark:text-paper/50"
    >
       <Icon name="arrow-down" class="size-6" />
    </a>
