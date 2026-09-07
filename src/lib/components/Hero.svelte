@@ -35,7 +35,8 @@
 
    <div class="mx-auto w-full max-w-6xl px-6">
       <p
-         class="mb-5 inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-50 px-4 py-1.5 text-xs font-medium text-brand-700 dark:border-brand-400/20 dark:bg-white/5 dark:text-brand-300"
+         class="hero-in mb-5 inline-flex items-center gap-2 rounded-full border border-brand-400/30 bg-brand-50 px-4 py-1.5 text-xs font-medium text-brand-700 dark:border-brand-400/20 dark:bg-white/5 dark:text-brand-300"
+         style="animation-delay: 0ms"
       >
          <span class="relative flex size-2">
             <span class="relative inline-flex size-2 rounded-full bg-brand-500"
@@ -45,7 +46,8 @@
       </p>
 
       <h1
-         class="font-display text-5xl leading-[1.05] font-bold tracking-tight sm:text-6xl lg:text-7xl"
+         class="hero-in font-display text-5xl leading-[1.05] font-bold tracking-tight sm:text-6xl lg:text-7xl"
+         style="animation-delay: 80ms"
       >
          Hi, I'm <span
             class="bg-linear-to-r from-brand-500 via-accent-500 to-brand-600 bg-clip-text text-transparent"
@@ -54,16 +56,23 @@
       </h1>
 
       <div
-         class="relative mt-4 h-8 font-display text-2xl font-medium text-ink/70 sm:h-9 sm:text-3xl dark:text-paper/70"
+         class="hero-in relative mt-4 h-8 font-display text-2xl font-medium text-ink/70 sm:h-9 sm:text-3xl dark:text-paper/70"
+         style="animation-delay: 160ms"
       >
          {profile.roles[0]}
       </div>
 
-      <p class="mt-6 max-w-xl text-lg text-ink/60 dark:text-paper/60">
+      <p
+         class="hero-in mt-6 max-w-xl text-lg text-ink/60 dark:text-paper/60"
+         style="animation-delay: 240ms"
+      >
          {profile.tagline}
       </p>
 
-      <div class="mt-9 flex flex-wrap items-center gap-4">
+      <div
+         class="hero-in mt-9 flex flex-wrap items-center gap-4"
+         style="animation-delay: 320ms"
+      >
          <a
             href="#projects"
             class="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-ink px-6 py-3 text-sm font-semibold text-paper transition hover:scale-105 active:scale-95 dark:bg-paper dark:text-ink"
@@ -81,7 +90,7 @@
          </a>
       </div>
 
-      <div class="mt-10 flex items-center gap-4">
+      <div class="hero-in mt-10 flex items-center gap-4" style="animation-delay: 400ms">
          {#each socials as social (social.label)}
             <a
                href={social.href}
@@ -104,3 +113,28 @@
       <Icon name="arrow-down" class="size-6" />
    </a>
 </section>
+
+<style>
+   .hero-in {
+      opacity: 0;
+      animation: hero-in 0.6s ease-out forwards;
+   }
+
+   @keyframes hero-in {
+      from {
+         opacity: 0;
+         transform: translateY(12px);
+      }
+      to {
+         opacity: 1;
+         transform: translateY(0);
+      }
+   }
+
+   @media (prefers-reduced-motion: reduce) {
+      .hero-in {
+         animation: none;
+         opacity: 1;
+      }
+   }
+</style>
