@@ -117,17 +117,20 @@
 <style>
    .hero-in {
       opacity: 0;
+      will-change: opacity, transform;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
       animation: hero-in 0.6s ease-out forwards;
    }
 
    @keyframes hero-in {
       from {
          opacity: 0;
-         transform: translateY(12px);
+         transform: translate3d(0, 12px, 0);
       }
       to {
          opacity: 1;
-         transform: translateY(0);
+         transform: translate3d(0, 0, 0);
       }
    }
 

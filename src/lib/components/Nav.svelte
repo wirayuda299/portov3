@@ -63,7 +63,7 @@
 </script>
 
 <header
-	class="fixed inset-x-0 top-0 z-50 transition-all duration-300 {scrolled
+	class="fixed inset-x-0 top-0 z-50 transition-colors duration-300 {scrolled
 		? 'border-b border-black/5 bg-white/70 backdrop-blur-lg dark:border-white/5 dark:bg-ink/60'
 		: ''}"
 >
